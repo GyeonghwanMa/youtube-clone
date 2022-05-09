@@ -2,7 +2,6 @@ import { Avatar, Col, Row, Typography, Card } from "antd";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { duration } from "moment";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -26,8 +25,8 @@ function LandingPage() {
 
     return (
       <Col lg={6} md={8} xs={24} key={index}>
-        <a href={`/video/post/${video._id}`}>
-          <div style={{ position: "relative" }}>
+        <div style={{ position: "relative" }}>
+          <a href={`/video/${video._id}`}>
             <img
               style={{ width: "100%" }}
               src={`http://localhost:5000/${video.thumbnail}`}
@@ -37,17 +36,16 @@ function LandingPage() {
                 {minutes} : {seconds}
               </span>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
         <br />
         <Meta
           avatar={<Avatar src={video.writer.image} />}
           title={video.title}
-          description=""
         />
-        <span>{video.title}</span>
-        <span style={{ marginLeft: "3rem" }}>{video.views} views</span> ={" "}
-        <span>{moment(video.createdAt).format("MMM Do YY")}</span>
+        <span>{video.writer.name}</span> <br />
+        <span style={{ marginLeft: "3rem" }}> {video.views}</span>-{" "}
+        <span> {moment(video.createdAt).format("MMM Do YY")} </span>
       </Col>
     );
   });
