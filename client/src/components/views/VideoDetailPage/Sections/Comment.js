@@ -3,6 +3,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 import SingleComment from "./SingleComment";
+import ReplyComment from "./ReplyComment";
 
 function Comment(props) {
   const user = useSelector((state) => state.user); // redux에서 가져오기
@@ -41,17 +42,25 @@ function Comment(props) {
         props.commentList.map(
           (comment, index) =>
             !comment.responseTo && (
-              <SingleComment
-                postId={props.postId}
-                comment={comment}
-                key={index}
-                refreshFunction={props.refreshFunction}
-              />
+              <React.Fragment>
+                <SingleComment
+                  key={"single" + index}
+                  postId={props.postId}
+                  comment={comment}
+                  refreshFunction={props.refreshFunction}
+                />
+                <ReplyComment
+                  key={"reply" + index}
+                  commentList={props.commentList}
+                  parentCommentId={comment._id}
+                  postId={props.postId}
+                  refreshFunction={props.refreshFunction}
+                />
+              </React.Fragment>
             )
         )}
 
       {/* Root Comment Form */}
-
       <form style={{ display: "flex" }} onSubmit={onSubmit}>
         <textarea
           style={{ width: "100%", borderRadius: "5px" }}
